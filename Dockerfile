@@ -16,4 +16,4 @@ COPY _data/ ./_data/
 
 # TF-IDF version — no model download, starts in under 2 seconds
 # Switch back to streamlit_app.py to use the ChromaDB version locally
-CMD ["streamlit", "run", "streamlit_app_tfidf.py", "--server.port=10000", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=10000", "--server.address=0.0.0.0"]
