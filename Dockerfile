@@ -6,13 +6,14 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy app code
+# Copy all app files
 COPY streamlit_app.py .
+COPY streamlit_app_tfidf.py .
 COPY main.py .
 
 # Copy the company documents the RAG system searches through
 COPY _data/ ./_data/
 
-# 0.0.0.0 makes Streamlit accessible outside the container (required for Render)
-# Port 10000 is Render's default
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=10000", "--server.address=0.0.0.0"]
+# TF-IDF version — no model download, starts in under 2 seconds
+# Switch back to streamlit_app.py to use the ChromaDB version locally
+CMD ["streamlit", "run", "streamlit_app_tfidf.py", "--server.port=10000", "--server.address=0.0.0.0"]
