@@ -114,7 +114,10 @@ import numpy as np
 # ──────────────────────────────────────
 
 load_dotenv()
-GROQ_API_KEY = os.getenv("groq_api_key")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+if not GROQ_API_KEY:
+    st.error("GROQ_API_KEY is missing. Check environment variables.")
+    st.stop()
 DATA_FOLDER  = os.path.join(os.path.dirname(__file__), "_data")
 
 # ──────────────────────────────────────
@@ -321,7 +324,7 @@ def ask_rag(question: str, top_k: int = 3) -> dict:
 
     # Step 5 — generate answer via Groq
     response = groq_client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-20b",
         messages=messages,
         temperature=0.2
     )
