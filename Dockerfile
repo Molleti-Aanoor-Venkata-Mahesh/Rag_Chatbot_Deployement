@@ -1,19 +1,18 @@
+
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install dependencies first (cached layer — only rebuilds if requirements.txt changes)
+# Install Python dependencies
 COPY requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all app files
-COPY streamlit_app.py .
-COPY streamlit_app_tfidf.py .
-COPY main.py .
+# Copy the RAG chatbot application
+COPY rag_app.py .
 
-# Copy the company documents the RAG system searches through
+# Copy company documents
 COPY _data/ ./_data/
 
-# TF-IDF version — no model download, starts in under 2 seconds
-# Switch back to streamlit_app.py to use the ChromaDB version locally
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=10000", "--server.address=0.0.0.0"]
+# Start Streamlit application
+CMD ["streamlit", "run", "rag_app.py", "--server.port=10000", "--server.address=0.0.0.0"]
